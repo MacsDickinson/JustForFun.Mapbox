@@ -3,3 +3,52 @@
 }
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<System.Collections.Generic.List<JustForFun.Mapbox.Domain.Location>>
 
+<div id='map-wrapper'>
+    <div id='map'></div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        L.mapbox.accessToken = 'pk.eyJ1IjoibWFjc2RpY2tpbnNvbiIsImEiOiI3R2FLei1jIn0.As3Ni9FK_IkYl6V4rVsubA';
+
+        var map = L.mapbox.map('map', 'examples.map-20v6611k')
+            .setView([-24.7667, 30.8667], 3);
+
+        loadData(map, '/MapData');
+
+        //addPoint(map, 'Peregrine Espresso', '1718 14th St NW, Washington, DC', -77.03221142292, 38.913371603574);
+        //addPoint(map, 'Something else', 'Something else', -77.04, 38.913371603574);
+
+        function loadData(map, url) {
+            L.mapbox.featureLayer()
+                .loadURL(url)
+                .addTo(map);
+        }
+
+        function addPoint(map, title, description, longitude, latitude) {
+            L.mapbox.featureLayer({
+                // this feature is in the GeoJSON format: see geojson.org
+                // for the full specification
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    // coordinates here are in longitude, latitude order because
+                    // x, y is the standard for GeoJSON and many formats
+                    coordinates: [
+                      longitude,
+                      latitude
+                    ]
+                },
+                properties: {
+                    title: title,
+                    description: description,
+                    // one can customize markers by adding simplestyle properties
+                    // https://www.mapbox.com/foundations/an-open-platform/#simplestyle
+                    'marker-size': 'large',
+                    'marker-color': '#6FCAC5',
+                    'marker-symbol': 'star'
+                }
+            }).addTo(map);
+        }
+    })
+</script>

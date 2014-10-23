@@ -8,9 +8,9 @@ namespace JustForFun.Mapbox.Home
     using JustForFun.Mapbox.Domain;
     using Nancy.ModelBinding;
     using Nancy.Responses;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
     using Raven.Client;
-    using Raven.Imports.Newtonsoft.Json;
-    using Raven.Imports.Newtonsoft.Json.Serialization;
 
     public class HomeModule : NancyModule
     {
@@ -80,7 +80,7 @@ namespace JustForFun.Mapbox.Home
 
             Get["/MapData"] = _ =>
             {
-                var posts = documentSession.Query<Location>().ToList().Select(x =>
+                var posts = new FeatureCollection(documentSession.Query<Location>().ToList().Select(x =>
                 {
                     var point = new GeoJSON.Net.Geometry.Point(new GeoJSON.Net.Geometry.GeographicPosition(x.Latitude, x.Longitude));
 
@@ -93,7 +93,7 @@ namespace JustForFun.Mapbox.Home
                         { "marker-symbol", "star" }
                     };
                     return new Feature(point, featureProperties);
-                });
+                }).ToList());
 
                 var serializedData = JsonConvert.SerializeObject(posts, Formatting.Indented, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore });
 
