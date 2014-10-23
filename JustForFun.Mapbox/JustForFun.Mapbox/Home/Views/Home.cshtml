@@ -1,42 +1,5 @@
 ﻿@{
-    Layout = null;
+    Layout = "Shared/_Layout.cshtml";
 }
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<System.Collections.Generic.List<JustForFun.Mapbox.Domain.Location>>
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>JustForFun - Mapbox</title>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
-</head>
-<body>
-    <div>
-        <h1>JustForFun - Mapbox</h1>
-        <ul id="locations">
-            @foreach (var location in Model)
-            {
-                <li>@location.Title</li>
-            }
-        </ul>
-        <input type="text" id="new-title" />
-        <input type="submit" id="add"/>
-    </div>
-    <script type="text/javascript">
-        $(function() {
-            $('#add').click(function () {
-                var title = $('#new-title').val();
-                if (title) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Test/' + title,
-                        success: function(data) {
-                            $('#locations').append('<li>' + data + '</li>');
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>

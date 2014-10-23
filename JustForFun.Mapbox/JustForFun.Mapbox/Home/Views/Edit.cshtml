@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "Shared/_Layout.cshtml";
+}
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<System.Collections.Generic.List<JustForFun.Mapbox.Domain.Location>>
+
+<div class="ui grid">
+    @foreach (var location in Model)
+    {
+        <div class="four wide column">
+            <form method="POST" action="/Update">
+                <div class="ui form segment location">
+                    <input type="hidden" name="Id" value="@location.Id" />
+                    <div class="field">
+                        <label>Title</label>
+                        <div class="ui left labeled icon input">
+                            <input type="text" placeholder="Title" name="title" value="@location.Title">
+                            <i class="user icon"></i>
+                            <div class="ui corner label">
+                                <i class="icon asterisk"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <textarea name="description">@location.Description</textarea>
+                    </div>
+                    <div class="two fields two wide column">
+                        <div class="field">
+                            <label>Latitude</label>
+                            <input type="text" placeholder="Title" name="latitude" value="@location.Latitude">
+                        </div>
+                        <div class="field">
+                            <label>Longitude</label>
+                            <input type="text" placeholder="Title" name="longitude" value="@location.Longitude">
+                        </div>
+                    </div>
+                    <input type="submit" class="ui blue submit button" value="Update" />
+                </div>
+            </form>
+        </div>
+    }
+</div>

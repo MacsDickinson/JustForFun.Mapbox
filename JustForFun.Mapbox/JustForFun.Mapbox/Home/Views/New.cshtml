@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "Shared/_Layout.cshtml";
+}
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<JustForFun.Mapbox.Domain.Location>
+
+<form method="POST" action="/New">
+    <div class="ui form segment location">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="field">
+            <label>Title</label>
+            <div class="ui left labeled icon input">
+                <input type="text" placeholder="Title" name="title" value="@Model.Title">
+                <i class="user icon"></i>
+                <div class="ui corner label">
+                    <i class="icon asterisk"></i>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea name="description">@Model.Description</textarea>
+        </div>
+        <div class="two fields two wide column">
+            <div class="field">
+                <label>Latitude</label>
+                <input type="text" placeholder="Title" name="latitude" value="@Model.Latitude">
+            </div>
+            <div class="field">
+                <label>Longitude</label>
+                <input type="text" placeholder="Title" name="longitude" value="@Model.Longitude">
+            </div>
+        </div>
+        <input type="submit" class="ui blue submit button" value="Save" />
+    </div>
+</form>
